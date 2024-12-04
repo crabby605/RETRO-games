@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atari: Pong Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            border: 1px solid white;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById("pongCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const paddleWidth = 10;
+        const paddleHeight = 100;
+        const ballRadius = 10;
+
+        let leftPaddleY = canvas.height / 2 - paddleHeight / 2;
+        let rightPaddleY = canvas.height / 2 - paddleHeight / 2;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballSpeedX = 5;
+        let ballSpeedY = 5;
+
+        let leftPaddleSpeed = 0;
+        let rightPaddleSpeed = 0;
+
+        let leftScore = 0;
+        let rightScore = 0;
+
+        const paddleSpeed = 6;
+        const ballSpeed = 5;
+
+        const bounceSound = new Audio('https://cloud-mu0yqeplt-hack-club-bot.vercel.app/0ping_pong_8bit_beeep_audio.mp4');
+
+        function drawPaddles() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
+            ctx.fillRect(canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight);
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, false);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawScores() {
+            ctx.font = "32px Arial";
+            ctx.fillStyle = "white";
+            ctx.fillText(leftScore, canvas.width / 4, 50);
+            ctx.fillText(rightScore, (canvas.width / 4) * 3, 50);
+        }
+
+        function movePaddles() {
+            if (leftPaddleY + leftPaddleSpeed >= 0 && leftPaddleY + leftPaddleSpeed <= canvas.height - paddleHeight) {
+                leftPaddleY += leftPaddleSpeed;
+            }
+
+            if (rightPaddleY + rightPaddleSpeed >= 0 && rightPaddleY + rightPaddleSpeed <= canvas.height - paddleHeight) {
+                rightPaddleY += rightPaddleSpeed;
+            }
+        }
+
+        function moveBall() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+            if (ballX - ballRadius < paddleWidth && ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                bounceSound.play();
+            }
+
+            if (ballX + ballRadius > canvas.width - paddleWidth && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                bounceSound.play();
+            }
+
+            if (ballX - ballRadius < 0) {
+                rightScore++;
+                resetBall();
+            }
+
+            if (ballX + ballRadius > canvas.width) {
+                leftScore++;
+                resetBall();
+            }
+        }
+
+        function resetBall() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+            ballSpeedX = -ballSpeedX;
+            ballSpeedY = (Math.random() * 2 - 1) * ballSpeed;
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") {
+                rightPaddleSpeed = -paddleSpeed;
+            } else if (event.key === "ArrowDown") {
+                rightPaddleSpeed = paddleSpeed;
+            }
+
+            if (event.key === "w") {
+                leftPaddleSpeed = -paddleSpeed;
+            } else if (event.key === "s") {
+                leftPaddleSpeed = paddleSpeed;
+            }
+        });
+
+        document.addEventListener("keyup", (event) => {
+            if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+                rightPaddleSpeed = 0;
+            }
+
+            if (event.key === "w" || event.key === "s") {
+                leftPaddleSpeed = 0;
+            }
+        });
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPaddles();
+            drawBall();
+            drawScores();
+            movePaddles();
+            moveBall();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
