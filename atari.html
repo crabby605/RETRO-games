@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crabby's Games - Atari</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: #eaeaea;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
+        h1 {
+            font-size: 3em;
+            color: #eaeaea;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 30px;
+        }
+
+        .game-button {
+            font-size: 1.5em;
+            padding: 18px 36px;
+            background-color: #2f3a56;
+            color: #eaeaea;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-button:hover {
+            background-color: #4a5d7d;
+            transform: translateY(-4px);
+        }
+
+        .game-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            font-size: 1.3em;
+            padding: 15px 30px;
+            background-color: #eaeaea;
+            color: #121212;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #d5d5d5;
+            transform: translateY(-4px);
+        }
+
+        .back-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Nintendo Games</h1>
+    <div class="game-list">
+        <a href="pong.html">
+            <button class="game-button">Pong</button>
+        </a>
+
+        <a href="index.html">
+            <button class="back-button">Back to Home</button>
+        </a>
+    </div>
+</body>
+</html>
