@@ -4,6 +4,7 @@
 
 ### Games Included:
 - **Pong**: A two-player Pong game with classic gameplay and simple controls.
+- **TTT**: Classic tic tac toe
 - More games will be added soon!
 
 ### Features:
